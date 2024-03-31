@@ -8,7 +8,7 @@ android {
     namespace = "com.ubaya.sushiworld"
     compileSdk = 34
 
-    buildFeatures {
+    buildFeatures{
         viewBinding = true
     }
 
