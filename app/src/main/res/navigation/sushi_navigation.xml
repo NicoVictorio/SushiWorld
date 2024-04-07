@@ -9,4 +9,14 @@
         android:name="com.ubaya.sushiworld.view.SushiListFragment"
         android:label="fragment_sushi_list"
         tools:layout="@layout/fragment_sushi_list" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.ubaya.sushiworld.view.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.ubaya.sushiworld.view.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>
