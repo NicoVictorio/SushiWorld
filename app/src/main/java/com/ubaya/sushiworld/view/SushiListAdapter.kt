@@ -2,6 +2,7 @@ package com.ubaya.sushiworld.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.ubaya.sushiworld.databinding.SushiListItemBinding
@@ -30,6 +31,11 @@ class SushiListAdapter(val sushiList:ArrayList<Sushi>): RecyclerView.Adapter<Sus
         builder.listener { picasso, uri, exception ->
             exception.printStackTrace() }
         builder.build().load(url).into(holder.binding.imageView)
+
+        holder.binding.btnDetail.setOnClickListener{
+            val action = SushiListFragmentDirections.actionSushiDetailFragment(sushiList[position].id.toString())
+            Navigation.findNavController(it).navigate(action)
+        }
     }
 
     fun updateSushiList(newSubjectList: ArrayList<Sushi>) {

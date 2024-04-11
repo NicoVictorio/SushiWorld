@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Request
 import com.android.volley.Response
@@ -44,27 +45,29 @@ class SignUpActivity : AppCompatActivity() {
             repassword = binding.txtRePassword.text.toString()
             photo_url = binding.txtPhotoUrl.text.toString()
 
-//            if (password == repassword) {
-//                viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-//                viewModel.signup(username, nama_depan, nama_belakang, email, password, photo_url)
-//                if(viewModel.statusLD.value=="OK"){
-//                    Toast.makeText(this, "Sign Up Success", Toast.LENGTH_SHORT).show()
-//                    val intent = Intent(this, LoginActivity::class.java)
-//                    startActivity(intent)
-//                    this.finish()
-//                }
-//                else{
-//                    Toast.makeText(this, "Sign Up Failed", Toast.LENGTH_SHORT).show()
-//                    val intent = Intent(this, SignUpActivity::class.java)
-//                    startActivity(intent)
-//                    this.finish()
-//                }
-//            } else {
-//                val builder = AlertDialog.Builder(it.context)
-//                builder.setMessage("Password and Re-type Password not match!")
-//                builder.setPositiveButton("OK", null)
-//                builder.create().show()
-//            }
+            if (password == repassword) {
+                viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+                viewModel.signup(username, nama_depan, nama_belakang, email, password, photo_url)
+                viewModel.statusLD.observe(this, Observer {
+                    if(it.toString() == "OK"){
+                        Toast.makeText(this, "Sign Up Success", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                        this.finish()
+                    }
+                    else{
+                        Toast.makeText(this, "Sign Up Failed", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, SignUpActivity::class.java)
+                        startActivity(intent)
+                        this.finish()
+                    }
+                })
+            } else {
+                val builder = AlertDialog.Builder(it.context)
+                builder.setMessage("Password and Re-type Password not match!")
+                builder.setPositiveButton("OK", null)
+                builder.create().show()
+            }
         }
     }
 }

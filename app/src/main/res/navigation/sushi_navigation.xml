@@ -8,7 +8,11 @@
         android:id="@+id/sushiListFragment"
         android:name="com.ubaya.sushiworld.view.SushiListFragment"
         android:label="fragment_sushi_list"
-        tools:layout="@layout/fragment_sushi_list" />
+        tools:layout="@layout/fragment_sushi_list" >
+        <action
+            android:id="@+id/actionSushiDetailFragment"
+            app:destination="@id/sushiDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ubaya.sushiworld.view.ProfileFragment"
@@ -19,4 +23,13 @@
         android:name="com.ubaya.sushiworld.view.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/sushiDetailFragment"
+        android:name="com.ubaya.sushiworld.view.SushiDetailFragment"
+        android:label="fragment_sushi_detail"
+        tools:layout="@layout/fragment_sushi_detail" >
+        <argument
+            android:name="sushiId"
+            app:argType="string" />
+    </fragment>
 </navigation>
