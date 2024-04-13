@@ -16,6 +16,7 @@ import org.json.JSONObject
 class UserViewModel (application: Application): AndroidViewModel(application) {
     val userLD = MutableLiveData<User?>()
     val statusLD = MutableLiveData<String>()
+    val editLD = MutableLiveData<String>()
 
     val TAG = "volleyTag"
     private var queue: RequestQueue? = null
@@ -63,6 +64,26 @@ class UserViewModel (application: Application): AndroidViewModel(application) {
                 val result = Gson().fromJson<String>(it, sType)
                 statusLD.value = result
                 Log.d("showvoley", it)
+            },
+            {
+                Log.d("showvoley", it.toString())
+            })
+        stringRequest.tag = TAG
+        queue?.add(stringRequest)
+    }
+
+    fun edit(
+        password:String, nama_depan:String, nama_belakang:String, id:String
+    ){
+        queue = Volley.newRequestQueue(getApplication())
+        val url = "https://icfubaya2023.com/editprofileocin?password=$password&firstName=$nama_depan&lastName=$nama_belakang&id=$id"
+        var stringRequest = StringRequest(
+            Request.Method.GET, url,
+            {
+                val sType = object : TypeToken<String>() { }.type
+                val result = Gson().fromJson<String>(it, sType)
+                editLD.value = result
+                Log.d("showvoley", editLD.value.toString())
             },
             {
                 Log.d("showvoley", it.toString())

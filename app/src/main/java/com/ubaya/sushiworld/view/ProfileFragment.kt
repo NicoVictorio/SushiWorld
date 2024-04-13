@@ -11,12 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.ubaya.sushiworld.R
 import com.ubaya.sushiworld.databinding.FragmentProfileBinding
 import com.ubaya.sushiworld.viewmodel.UserViewModel
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +33,24 @@ class ProfileFragment : Fragment() {
 
         val sharedFile= "com.ubaya.sushiworld"
         val shared: SharedPreferences = requireActivity().getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
+        var userId = shared.getInt(LoginActivity.USERID.toString(), -1)
+
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         binding.txtNama.text = "Hai, " + shared.getString(LoginActivity.NAMADEPAN, "") + " " +
                                 shared.getString(LoginActivity.NAMABELAKANG, "");
-        
-        binding.btnLogout.setOnClickListener(){
+
+        binding.btnSaveChanges.setOnClickListener{
+            var namaDepanBaru = binding.txtNamaDepanBaru.text
+            var namaBelakangBaru = binding.txtNamaBelakangBaru.text
+            var passwordBaru = binding.txtPasswordBaru.text
+
+            viewModel.edit(passwordBaru.toString(), namaDepanBaru.toString(), namaBelakangBaru.toString(), userId.toString())
+
+            binding.btnLogout.performClick()
+        }
+
+        binding.btnLogout.setOnClickListener{
             val editor: SharedPreferences.Editor = shared.edit()
             editor.putInt(LoginActivity.USERID, -1)
             editor.putString(LoginActivity.PHOTOURL, "")
